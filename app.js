@@ -12,46 +12,49 @@ document.addEventListener("DOMContentLoaded", () => {
     let esVisualizacion = false;
   
     // Crear botones
-    for (let i = 1; i <= 100; i++) {
-      const btn = document.createElement("button");
-      btn.innerText = i;
-      btn.classList.add("puesto");
-      btn.id = `puesto-${i}`;
-  
-      btn.addEventListener("click", async () => {
-        puestoSeleccionado = i;
-        const docRef = db.collection("puestos").doc(i.toString());
-        const docSnap = await docRef.get();
-  
-        if (docSnap.exists) {
-          // Visualizar datos ya guardados
-          const data = docSnap.data();
-          clienteInput.value = data.cliente || "";
-          responsableSelect.value = data.responsable || "";
-  
-          clienteInput.disabled = true;
-          responsableSelect.disabled = true;
-          guardarBtn.style.display = "none";
-  
-          modalNumero.textContent = i;
-          modal.classList.remove("hidden");
-          esVisualizacion = true;
-        } else {
-          // Nuevo registro
-          clienteInput.value = "";
-          responsableSelect.value = "";
-          clienteInput.disabled = false;
-          responsableSelect.disabled = false;
-          guardarBtn.style.display = "inline-block";
-  
-          modalNumero.textContent = i;
-          modal.classList.remove("hidden");
-          esVisualizacion = false;
-        }
-      });
-  
-      container.appendChild(btn);
-    }
+    for (let i = 0; i < 100; i++) {
+        const puestoStr = i.toString().padStart(2, '0'); // "00"..."99"
+      
+        const btn = document.createElement("button");
+        btn.innerText = puestoStr;
+        btn.classList.add("puesto");
+        btn.id = `puesto-${puestoStr}`;
+      
+        btn.addEventListener("click", async () => {
+          puestoSeleccionado = puestoStr;
+          const docRef = db.collection("puestos").doc(puestoStr);
+          const docSnap = await docRef.get();
+      
+          if (docSnap.exists) {
+            // Visualizar datos existentes
+            const data = docSnap.data();
+            clienteInput.value = data.cliente || "";
+            responsableSelect.value = data.responsable || "";
+      
+            clienteInput.disabled = true;
+            responsableSelect.disabled = true;
+            guardarBtn.style.display = "none";
+      
+            modalNumero.textContent = puestoStr;
+            modal.classList.remove("hidden");
+            esVisualizacion = true;
+          } else {
+            // Nuevo registro
+            clienteInput.value = "";
+            responsableSelect.value = "";
+            clienteInput.disabled = false;
+            responsableSelect.disabled = false;
+            guardarBtn.style.display = "inline-block";
+      
+            modalNumero.textContent = puestoStr;
+            modal.classList.remove("hidden");
+            esVisualizacion = false;
+          }
+        });
+      
+        container.appendChild(btn);
+      }
+      
   
     // Guardar datos del modal
     guardarBtn.addEventListener("click", async () => {
@@ -63,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
   
-      await db.collection("puestos").doc(puestoSeleccionado.toString()).set({
+      await db.collection("puestos").doc(puestoSeleccionado).set({
         vendido: true,
         cliente: nombreCliente,
         responsable: responsable,
@@ -81,15 +84,16 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Escuchar cambios en Firestore
     db.collection("puestos").onSnapshot((snapshot) => {
-      snapshot.forEach((doc) => {
-        const id = doc.id;
-        const btn = document.getElementById(`puesto-${id}`);
-        if (btn) {
-          btn.classList.add("vendido");
-          btn.disabled = false; // Habilitado para ver detalles
-        }
+        snapshot.forEach((doc) => {
+          const id = doc.id;
+          const btn = document.getElementById(`puesto-${id}`);
+          if (btn) {
+            btn.classList.add("vendido");
+            btn.disabled = false; // Para ver info
+          }
+        });
       });
-    });
+      
   });
   
 
