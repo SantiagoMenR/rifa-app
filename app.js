@@ -62,7 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const responsable = responsableSelect.value;
   
       if (!nombreCliente || !responsable) {
-        alert("Por favor completa todos los campos.");
+        Swal.fire({
+          title: "Por favor completa todos los campos.",
+          icon: "warning"
+        });
         return;
       }
   
@@ -74,7 +77,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   
       modal.classList.add("hidden");
-      alert(`¡Puesto #${puestoSeleccionado} registrado exitosamente!`);
+      Swal.fire({
+        title: `¡Puesto #${puestoSeleccionado} registrado exitosamente!`,
+        text: "El puesto ha sido registrado exitosamente.",
+        icon: "success"
+      });
     });
   
     // Cerrar modal
