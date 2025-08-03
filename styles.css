@@ -1,0 +1,128 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    background: #f9f9f9;
+    padding: 10px;
+    margin: 0;
+  }
+  
+  h1 {
+    margin-top: 10px;
+    font-size: 24px;
+  }
+  
+  /* Contenedor de botones responsive */
+  #puestos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 0 10px;
+  }
+  
+  button.puesto {
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    transition: 0.2s;
+  }
+  
+  button.puesto:hover {
+    background-color: #43a047;
+  }
+  
+  button.puesto.vendido {
+    background-color: #e74c3c;
+    cursor: pointer;
+  }
+  
+  /* MODAL responsive */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    padding: 20px;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 360px;
+    box-sizing: border-box;
+  }
+  
+  .modal-content h2 {
+    margin-top: 0;
+    font-size: 20px;
+  }
+  
+  .modal-content label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .modal-content input,
+  .modal-content select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 4px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  .modal-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .modal-buttons button {
+    flex: 1;
+    padding: 10px;
+    margin: 0 5px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #guardar-btn {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  #cancelar-btn {
+    background-color: #ccc;
+  }
+.modal.hidden {
+  display: none;
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+      padding: 15px;
+    }
+  
+    button.puesto {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
